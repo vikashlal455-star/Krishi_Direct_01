@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KrishiDirect | Next-Gen AI AgTech Portal</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js for AI Demand Forecasting -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+        }
+        
+        /* Glassmorphism Effect */
+        .glass-panel { 
+            background: rgba(255, 255, 255, 0.85); 
+            backdrop-filter: blur(12px); 
+            -webkit-backdrop-filter: blur(12px);
+        }
+        
+        .glass-dark { 
+            background: rgba(15, 23, 42, 0.85); 
+            backdrop-filter: blur(12px); 
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* Hero Dynamic Gradient */
+        .gradient-hero { 
+            background: linear-gradient(135deg, #064e3b 0%, #047857 40%, #0d9488 100%); 
+        }
+
+        /* Pulse Animations */
+        @keyframes subtlePulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.85; transform: scale(1.02); }
+        }
+        .animate-subtle { animation: subtlePulse 3s infinite ease-in-out; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #10b981; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #059669; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- TOP NAVIGATION BAR -->
+    <nav class="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center gap-4">
+                
+                <!-- Logo -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('marketplace')">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center text-white text-2xl font-bold shadow-lg shadow-emerald-500/20">
+                        <i class="fa-solid fa-wheat-awn"></i>
+                    </div>
+                    <div>
+                        <span class="text-2xl font-extrabold bg-gradient-to-r from-emerald-800 via-teal-700 to-emerald-600 bg-clip-text text-transparent">KrishiDirect</span>
+                        <span class="block text-[10px] text-emerald-600 font-bold uppercase tracking-wider">SIH Portal #26033</span>
+                    </div>
+                </div>
+
+                <!-- Navigation Tabs -->
+                <div class="hidden md:flex items-center space-x-1 lg:space-x-2 bg-slate-100 p-1.5 rounded-2xl border border-slate-200">
+                    <button id="nav-marketplace" onclick="switchTab('marketplace')" class="px-5 py-2.5 rounded-xl font-semibold text-sm transition-all flex items-center gap-2 bg-white text-emerald-700 shadow-sm">
+                        <i class="fa-solid fa-store"></i> Marketplace
+                    </button>
+                    <button id="nav-farmer-portal" onclick="switchTab('farmer-portal')" class="px-5 py-2.5 rounded-xl font-semibold text-sm transition-all flex items-center gap-2 text-slate-600 hover:text-emerald-700">
+                        <i class="fa-solid fa-tractor"></i> Farmer Portal
+                    </button>
+                    <button id="nav-ai-analytics" onclick="switchTab('ai-analytics')" class="px-5 py-2.5 rounded-xl font-semibold text-sm transition-all flex items-center gap-2 text-slate-600 hover:text-emerald-700">
+                        <i class="fa-solid fa-brain text-emerald-600"></i> AI Forecast & Route
+                    </button>
+                </div>
+
+                <!-- Cart Button & Status -->
+                <div class="flex items-center space-x-3">
+                    <button onclick="toggleCartDrawer()" class="relative bg-emerald-50 hover:bg-emerald-100 text-emerald-800 p-3 rounded-xl border border-emerald-200 transition flex items-center gap-2 font-bold text-sm">
+                        <i class="fa-solid fa-cart-shopping text-lg text-emerald-600"></i>
+                        <span id="cart-count" class="bg-emerald-600 text-white text-xs px-2 py-0.5 rounded-full">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO HEADER -->
+    <header class="gradient-hero text-white py-12 px-4 shadow-xl relative overflow-hidden">
+        <div class="absolute -right-10 -bottom-10 opacity-10 text-white text-[250px] pointer-events-none">
+            <i class="fa-solid fa-wheat-field"></i>
+        </div>
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-10 relative z-10">
+            <div class="space-y-4 max-w-2xl text-center lg:text-left">
+                <span class="inline-flex items-center gap-2 bg-emerald-400/20 text-emerald-200 text-xs font-semibold px-3 py-1.5 rounded-full border border-emerald-300/30 backdrop-blur-md">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> Direct Farm-to-Fork Protocol
+                </span>
+                <h1 class="text-3xl sm:text-5xl font-black leading-tight tracking-tight">
+                    Eliminate Intermediaries, <br class="hidden sm:inline"/><span class="text-emerald-300">Empower Indian Agriculture</span>
+                </h1>
+                <p class="text-emerald-100 text-sm sm:text-base leading-relaxed">
+                    Connecting verified farmers directly with buyers. Powered by real-time AI price algorithms and cold-chain route optimization to reduce spoilage and maximize profit margins.
+                </p>
+                <div class="flex flex-wrap justify-center lg:justify-start gap-3 pt-2">
+                    <button onclick="switchTab('marketplace')" class="bg-emerald-400 hover:bg-emerald-300 text-slate-9 font-bold text-slate-900 px-6 py-3 rounded-xl transition shadow-lg shadow-emerald-950/20 flex items-center gap-2">
+                        <i class="fa-solid fa-basket-shopping"></i> Shop Fresh Produce
+                    </button>
+                    <button onclick="switchTab('farmer-portal')" class="bg-white/10 hover:bg-white/20 border border-white/30 font-semibold px-6 py-3 rounded-xl transition backdrop-blur-md flex items-center gap-2">
+                        <i class="fa-solid fa-plus-circle"></i> Sell Your Harvest
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dynamic Impact Counter Card -->
+            <div class="glass-panel text-slate-800 p-6 rounded-3xl shadow-2xl w-full max-w-md border border-white/40">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-extrabold text-slate-600 text-xs uppercase tracking-wider">Live Platform Impact</h3>
+                    <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-md">Verified Data</span>
+                </div>
+                <div class="grid grid-cols-3 gap-3 text-center">
+                    <div class="bg-emerald-50/80 p-3 rounded-2xl border border-emerald-100">
+                        <p class="text-emerald-600 font-extrabold text-xl">+32%</p>
+                        <p class="text-[11px] font-semibold text-slate-600 leading-tight mt-1">Farmer Income</p>
+                    </div>
+                    <div class="bg-teal-50/80 p-3 rounded-2xl border border-teal-100">
+                        <p class="text-teal-600 font-extrabold text-xl">-20%</p>
+                        <p class="text-[11px] font-semibold text-slate-600 leading-tight mt-1">Buyer Cost</p>
+                    </div>
+                    <div class="bg-amber-50/80 p-3 rounded-2xl border border-amber-100">
+                        <p class="text-amber-600 font-extrabold text-xl">-45%</p>
+                        <p class="text-[11px] font-semibold text-slate-600 leading-tight mt-1">Food Waste</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+
+        <!-- TAB 1: CONSUMER & BULK BUYER MARKETPLACE -->
+        <section id="marketplace" class="tab-content block space-y-6">
+            
+            <!-- Filter & Search Header -->
+            <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row gap-4 items-center justify-between">
+                <!-- Search bar -->
+                <div class="relative w-full md:w-80">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-sm"></i>
+                    <input type="text" id="search-input" onkeyup="filterProducts()" placeholder="Search crops, regions, farmers..." class="w-full pl-10 pr-4 py-2 bg-slate-50 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+
+                <!-- Category Filters -->
+                <div class="flex flex-wrap gap-2 w-full md:w-auto">
+                    <button onclick="setFilter('all', this)" class="filter-btn bg-emerald-600 text-white px-4 py-2 rounded-xl text-xs font-bold transition">All Produce</button>
+                    <button onclick="setFilter('vegetable', this)" class="filter-btn bg-slate-100 hover:bg-slate-200 text-slate-600 px-4 py-2 rounded-xl text-xs font-semibold transition">Vegetables</button>
+                    <button onclick="setFilter('fruit', this)" class="filter-btn bg-slate-100 hover:bg-slate-200 text-slate-600 px-4 py-2 rounded-xl text-xs font-semibold transition">Fruits</button>
+                    <button onclick="setFilter('grain', this)" class="filter-btn bg-slate-100 hover:bg-slate-200 text-slate-600 px-4 py-2 rounded-xl text-xs font-semibold transition">Grains & Pulses</button>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="products-grid">
+                <!-- Product Cards Render Dynamic Content via JS -->
+            </div>
+        </section>
+
+        <!-- TAB 2: FARMER PORTAL -->
+        <section id="farmer-portal" class="tab-content hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <!-- Produce Listing Form -->
+                <div class="lg:col-span-1 bg-white p-6 rounded-3xl shadow-sm border border-slate-200 h-fit">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold">
+                            <i class="fa-solid fa-cloud-arrow-up text-lg"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-lg font-extrabold text-slate-800">Post Harvest Crop</h2>
+                            <p class="text-xs text-slate-500">Instant AI mandi valuation listing</p>
+                        </div>
+                    </div>
+                    
+                    <form id="add-produce-form" class="space-y-4" onsubmit="handleFormSubmit(event)">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Crop Name & Category</label>
+                            <div class="grid grid-cols-2 gap-2">
+                                <input type="text" id="cropName" required placeholder="e.g. Fresh Tomatoes" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
+                                <select id="cropCategory" class="px-3 py-2.5 rounded-xl border border-slate-200 text-sm bg-slate-50 focus:ring-2 focus:ring-emerald-500 outline-none">
+                                    <option value="vegetable">Vegetable</option>
+                                    <option value="fruit">Fruit</option>
+                                    <option value="grain">Grain/Pulse</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Quantity (Kg)</label>
+                                <input type="number" id="cropQty" min="1" required placeholder="500" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Asking Rate (₹/Kg)</label>
+                                <input type="number" id="cropPrice" min="1" required placeholder="28" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Farmer / FPO & Location</label>
+                            <input type="text" id="farmerLoc" required placeholder="Ramesh Patel (Nashik, MH)" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
+                        </div>
+
+                        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-emerald-600/20 text-sm flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-paper-plane"></i> Publish Crop Listing
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Existing Active Listings Table -->
+                <div class="lg:col-span-2 bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
+                    <div class="flex justify-between items-center mb-6">
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-800">Your Active Harvest Inventory</h2>
+                            <p class="text-xs text-slate-500">Live order matching and smart logistics dispatch tracking</p>
+                        </div>
+                        <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full border border-emerald-200">
+                            Real-time Sync
+                        </span>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm text-slate-600">
+                            <thead class="bg-slate-50 text-slate-700 uppercase text-[11px] font-extrabold tracking-wider border-b border-slate-200">
+                                <tr>
+                                    <th class="p-3">Crop Details</th>
+                                    <th class="p-3">Quantity</th>
+                                    <th class="p-3">Listed Rate</th>
+                                    <th class="p-3">Status</th>
+                                    <th class="p-3 text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="farmer-listings-table" class="divide-y divide-slate-100">
+                                <!-- Dynamic Rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: AI DEMAND FORECAST & ROUTE OPTIMIZATION -->
+        <section id="ai-analytics" class="tab-content hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <!-- AI Price & Demand Forecasting Chart -->
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <h2 class="text-lg font-extrabold text-slate-800">AI Price & Demand Forecast</h2>
+                                <p class="text-xs text-slate-500">Predictive Mandi rates vs payout forecasts for next 7 days</p>
+                            </div>
+                            <span class="bg-indigo-50 text-indigo-700 text-xs font-bold px-3 py-1 rounded-full border border-indigo-200 flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span> Dynamic AI Engine
+                            </span>
+                        </div>
+                        <div class="relative h-64">
+                            <canvas id="demandChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="mt-4 p-4 bg-emerald-50 rounded-2xl border border-emerald-200 text-xs text-emerald-900 flex items-start gap-3">
+                        <i class="fa-solid fa-lightbulb text-emerald-600 text-base mt-0.5"></i>
+                        <div>
+                            <strong>AI Price Opportunity:</strong> Mandi demand for Onion stock is projected to surge by +14% over Thursday due to urban supply delays. Holding inventory for 48 hours is estimated to net +₹4/kg higher return.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Logistics & Route Optimization -->
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <h2 class="text-lg font-extrabold text-slate-800">Smart Logistics Route Optimizer</h2>
+                                <p class="text-xs text-slate-500">Cold-chain transit path planning to minimize carbon & spoilage</p>
+                            </div>
+                            <button onclick="runRouteOptimization()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition shadow-md shadow-emerald-600/20">
+                                Re-Optimize Path
+                            </button>
+                        </div>
+
+                        <!-- Route Visualizer Panel -->
+                        <div class="bg-slate-900 text-white p-6 rounded-2xl space-y-4 shadow-inner">
+                            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                                <span class="text-xs text-slate-400">Total Route Efficiency</span>
+                                <span class="font-mono text-emerald-400 text-xs font-bold">142 Km (-24 Km Saved)</span>
+                            </div>
+
+                            <!-- Interactive Route Steps -->
+                            <div class="space-y-3 font-mono text-xs">
+                                <div class="flex items-start space-x-3">
+                                    <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center font-bold text-[11px]">1</span>
+                                    <div>
+                                        <p class="text-slate-200 font-bold">Nashik FPO Hub (Collection Point)</p>
+                                        <p class="text-slate-400 text-[10px]">Collected 3.2 Tons Tomatoes & Onions</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center font-bold text-[11px]">2</span>
+                                    <div>
+                                        <p class="text-slate-200 font-bold">Kalyan Micro Cold Storage</p>
+                                        <p class="text-slate-400 text-[10px]">Passed Automated Temp & Freshness Scan</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <span class="w-6 h-6 rounded-full bg-teal-500/20 text-teal-400 border border-teal-500/30 flex items-center justify-center font-bold text-[11px]">3</span>
+                                    <div>
+                                        <p class="text-slate-200 font-bold">Mumbai Central Distribution Hub</p>
+                                        <p class="text-slate-400 text-[10px]">Direct dispatch to retail and consumer orders</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="optimization-status" class="pt-3 border-t border-slate-800 text-emerald-400 text-xs flex items-center gap-2">
+                                <i class="fa-solid fa-circle-check"></i> Optimal Route Active: Spoilage risk &lt; 1.8%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- SHOPPING CART SLIDE-OVER DRAWER -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden hidden">
+        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" onclick="toggleCartDrawer()"></div>
+        <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-white shadow-2xl flex flex-col justify-between">
+                
+                <!-- Drawer Header -->
+                <div class="p-6 border-b border-slate-200 flex justify-between items-center">
+                    <h2 class="text-lg font-extrabold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-basket-shopping text-emerald-600"></i> Direct Farm Cart
+                    </h2>
+                    <button onclick="toggleCartDrawer()" class="text-slate-400 hover:text-slate-600 p-2 text-lg">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <!-- Drawer Content -->
+                <div id="cart-items-container" class="p-6 overflow-y-auto flex-grow space-y-4">
+                    <!-- Dynamic Cart Items -->
+                </div>
+
+                <!-- Drawer Footer -->
+                <div class="p-6 border-t border-slate-200 bg-slate-50 space-y-4">
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="font-semibold text-slate-600">Subtotal</span>
+                        <span id="cart-subtotal" class="font-extrabold text-slate-900 text-lg">₹0</span>
+                    </div>
+                    <button onclick="checkoutCart()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-emerald-600/20 transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-shield-check"></i> Complete Direct Order
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-slate-200 py-6 mt-12 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-3">
+            <p>© 2026 KrishiDirect — Smart India Hackathon (SIH) | Problem ID: 26033</p>
+            <div class="flex gap-4 font-semibold text-slate-600">
+                <a href="#" class="hover:text-emerald-600">Ministry of Consumer Affairs</a>
+                <a href="#" class="hover:text-emerald-600">FPO Network</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Sample Products Dataset
+        let products = [
+            { id: 1, name: "Organic Tomatoes", price: 26, marketPrice: 40, farmer: "Ramesh Patil (FPO Nashik)", qty: 1200, category: "vegetable", img: "🍅" },
+            { id: 2, name: "Fresh Red Onions", price: 32, marketPrice: 50, farmer: "Suresh Kumar (Pune)", qty: 2500, category: "vegetable", img: "🧅" },
+            { id: 3, name: "Premium Potatoes", price: 22, marketPrice: 35, farmer: "AgriCoop Society", qty: 4000, category: "vegetable", img: "🥔" },
+            { id: 4, name: "Basmati Paddy Rice", price: 65, marketPrice: 90, farmer: "Punjab Grain Growers", qty: 5000, category: "grain", img: "🌾" },
+            { id: 5, name: "Fresh Nagpur Oranges", price: 45, marketPrice: 70, farmer: "Vidarbha Orchard FPO", qty: 800, category: "fruit", img: "🍊" }
+        ];
+
+        let cart = [];
+        let currentFilter = 'all';
+
+        // Tab Navigation Switcher
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(tabId).classList.remove('hidden');
+
+            // Style Active Tab Button
+            ['marketplace', 'farmer-portal', 'ai-analytics'].forEach(id => {
+                const btn = document.getElementById(`nav-${id}`);
+                if (id === tabId) {
+                    btn.className = "px-5 py-2.5 rounded-xl font-semibold text-sm transition-all flex items-center gap-2 bg-white text-emerald-700 shadow-sm";
+                } else {
+                    btn.className = "px-5 py-2.5 rounded-xl font-semibold text-sm transition-all flex items-center gap-2 text-slate-600 hover:text-emerald-700";
+                }
+            });
+        }
+
+        // Category Filter Logic
+        function setFilter(cat, btnElement) {
+            currentFilter = cat;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.className = "filter-btn bg-slate-100 hover:bg-slate-200 text-slate-600 px-4 py-2 rounded-xl text-xs font-semibold transition";
+            });
+            btnElement.className = "filter-btn bg-emerald-600 text-white px-4 py-2 rounded-xl text-xs font-bold transition";
+            renderProducts();
+        }
+
+        // Live Search Filter
+        function filterProducts() {
+            renderProducts();
+        }
+
+        // Render Product Cards
+        function renderProducts() {
+            const container = document.getElementById('products-grid');
+            const searchVal = document.getElementById('search-input').value.toLowerCase();
+
+            const filtered = products.filter(p => {
+                const matchesCategory = currentFilter === 'all' || p.category === currentFilter;
+                const matchesSearch = p.name.toLowerCase().includes(searchVal) || p.farmer.toLowerCase().includes(searchVal);
+                return matchesCategory && matchesSearch;
+            });
+
+            if(filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full py-12 text-center text-slate-400">
+                        <i class="fa-solid fa-seedling text-4xl mb-3"></i>
+                        <p class="font-semibold text-sm">No produce matching your search parameters.</p>
+                    </div>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(p => `
+                <div class="bg-white rounded-3xl p-5 border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="text-5xl bg-slate-50 py-6 rounded-2xl text-center mb-4 group-hover:scale-105 transition-transform duration-300">
+                            ${p.img}
+                        </div>
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-extrabold text-slate-800 text-base">${p.name}</h3>
+                            <span class="text-[10px] font-extrabold text-emerald-800 bg-emerald-100 border border-emerald-200 px-2 py-0.5 rounded-md">
+                                Direct Price
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-500 mb-3 flex items-center gap-1.5">
+                            <i class="fa-solid fa-circle-check text-emerald-600"></i> ${p.farmer}
+                        </p>
+                        
+                        <div class="flex items-baseline gap-2 mb-4">
+                            <span class="text-2xl font-black text-slate-900">₹${p.price}</span>
+                            <span class="text-xs text-slate-400 line-through">Mandi Rate: ₹${p.marketPrice}/kg</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="text-xs text-slate-500 mb-4 bg-slate-50 p-2.5 rounded-xl border border-slate-100 flex justify-between font-medium">
+                            <span>Available Stock:</span>
+                            <span class="font-bold text-slate-700">${p.qty} Kg</span>
+                        </div>
+
+                        <button onclick="addToCart(${p.id})" class="w-full bg-slate-900 hover:bg-emerald-600 text-white font-bold py-3 rounded-xl transition text-xs flex items-center justify-center gap-2 shadow-md">
+                            <i class="fa-solid fa-cart-plus"></i> Add To Cart
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Add Product to Cart Logic
+        function addToCart(productId) {
+            const item = products.find(p => p.id === productId);
+            const existing = cart.find(c => c.id === productId);
+
+            if (existing) {
+                existing.cartQty += 10;
+            } else {
+                cart.push({ ...item, cartQty: 10 });
+            }
+
+            updateCartUI();
+            toggleCartDrawer(true);
+        }
+
+        // Drawer Controls
+        function toggleCartDrawer(forceOpen = false) {
+            const drawer = document.getElementById('cart-drawer');
+            if (forceOpen) {
+                drawer.classList.remove('hidden');
+            } else {
+                drawer.classList.toggle('hidden');
+            }
+        }
+
+        // Update Cart Drawer UI
+        function updateCartUI() {
+            const countEl = document.getElementById('cart-count');
+            const container = document.getElementById('cart-items-container');
+            const subtotalEl = document.getElementById('cart-subtotal');
+
+            const totalItems = cart.reduce((sum, item) => sum + item.cartQty, 0);
+            countEl.innerText = totalItems;
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-slate-400">
+                        <i class="fa-solid fa-basket-shopping text-4xl mb-3"></i>
+                        <p class="text-sm font-semibold">Your cart is currently empty.</p>
+                    </div>`;
+                subtotalEl.innerText = "₹0";
+                return;
+            }
+
+            let subtotal = 0;
+            container.innerHTML = cart.map(item => {
+                const itemTotal = item.price * item.cartQty;
+                subtotal += itemTotal;
+                return `
+                    <div class="flex items-center justify-between p-3 bg-slate-50 rounded-2xl border border-slate-200">
+                        <div class="flex items-center gap-3">
+                            <span class="text-2xl">${item.img}</span>
+                            <div>
+                                <h4 class="font-bold text-xs text-slate-800">${item.name}</h4>
+                                <p class="text-[11px] text-slate-500">₹${item.price}/kg × ${item.cartQty}kg</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="font-extrabold text-sm text-slate-900">₹${itemTotal}</span>
+                            <button onclick="removeFromCart(${item.id})" class="text-rose-500 hover:text-rose-700 p-1 text-xs">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            subtotalEl.innerText = `₹${subtotal}`;
+        }
+
+        // Remove Cart Item
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            updateCartUI();
+        }
+
+        // Checkout Action
+        function checkoutCart() {
+            if (cart.length === 0) return alert('Your cart is empty!');
+            alert('Direct farm logistics order placed successfully! Dispatch confirmation sent to registered mobile number.');
+            cart = [];
+            updateCartUI();
+            toggleCartDrawer();
+        }
+
+        // Farmer Form Submit Handling
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('cropName').value;
+            const category = document.getElementById('cropCategory').value;
+            const qty = parseInt(document.getElementById('cropQty').value);
+            const price = parseInt(document.getElementById('cropPrice').value);
+            const farmer = document.getElementById('farmerLoc').value;
+
+            // Push New Produce
+            products.unshift({
+                id: Date.now(),
+                name: name,
+                price: price,
+                marketPrice: Math.round(price * 1.45),
+                farmer: farmer,
+                qty: qty,
+                category: category,
+                img: category === 'fruit' ? '🍎' : (category === 'grain' ? '🌾' : '🥦')
+            });
+
+            renderProducts();
+            updateFarmerTable(name, qty, price);
+
+            document.getElementById('add-produce-form').reset();
+            alert('Listing published successfully to the direct marketplace!');
+        }
+
+        // Update Farmer Active Listings Table
+        function updateFarmerTable(name, qty, price) {
+            const tbody = document.getElementById('farmer-listings-table');
+            const row = document.createElement('tr');
+            row.className = 'border-b border-slate-100 hover:bg-slate-50/80 transition';
+            row.innerHTML = `
+                <td class="p-3 font-extrabold text-slate-800">${name}</td>
+                <td class="p-3 font-semibold">${qty} Kg</td>
+                <td class="p-3 font-black text-emerald-600">₹${price}/kg</td>
+                <td class="p-3"><span class="bg-emerald-100 text-emerald-800 text-[11px] font-extrabold px-2.5 py-1 rounded-full">In Marketplace</span></td>
+                <td class="p-3 text-right"><button onclick="this.closest('tr').remove()" class="text-rose-500 hover:text-rose-700 text-xs font-semibold">Delist</button></td>
+            `;
+            tbody.prepend(row);
+        }
+
+        function initFarmerTable() {
+            updateFarmerTable("Organic Tomatoes", 1200, 26);
+            updateFarmerTable("Fresh Red Onions", 2500, 32);
+        }
+
+        // Route Optimization Simulation
+        function runRouteOptimization() {
+            const statusEl = document.getElementById('optimization-status');
+            statusEl.innerHTML = `<i class="fa-solid fa-spinner animate-spin text-amber-400"></i> Recalculating cold-chain transit path...`;
+            
+            setTimeout(() => {
+                statusEl.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400"></i> Optimal Route Active: Saved 31 Km & 45 Mins Transit Time!`;
+            }, 1000);
+        }
+
+        // Initialize AI Chart
+        function initChart() {
+            const ctx = document.getElementById('demandChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [
+                        {
+                            label: 'Predicted Mandi Rate (₹)',
+                            data: [38, 40, 42, 45, 44, 46, 48],
+                            borderColor: '#e11d48',
+                            backgroundColor: 'rgba(225, 29, 72, 0.05)',
+                            borderDash: [4, 4],
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: 'KrishiDirect Payout (₹)',
+                            data: [30, 32, 35, 38, 37, 39, 41],
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.4,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top', labels: { font: { family: "'Plus Jakarta Sans'", size: 11 } } }
+                    },
+                    scales: {
+                        y: { grid: { color: '#f1f5f9' }, ticks: { font: { family: "'Plus Jakarta Sans'" } } },
+                        x: { grid: { display: false }, ticks: { font: { family: "'Plus Jakarta Sans'" } } }
+                    }
+                }
+            });
+        }
+
+        // DOM Initialization
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+            initFarmerTable();
+            initChart();
+        });
+    </script>
+</body>
+</html>

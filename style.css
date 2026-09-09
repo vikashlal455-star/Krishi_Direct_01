@@ -1,0 +1,100 @@
+/* ==========================================================================
+   1. EXTERNAL FONTS & UTILITIES
+   ========================================================================== */
+
+/* Google Font: Plus Jakarta Sans */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap');
+
+/* FontAwesome Icons CSS: 
+   https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css */
+
+/* Tailwind CSS (Utility Framework): 
+   Included via CDN: https://cdn.tailwindcss.com */
+
+
+/* ==========================================================================
+   2. CUSTOM STYLES (From <style> block)
+   ========================================================================== */
+
+body { 
+  font-family: 'Plus Jakarta Sans', sans-serif; 
+}
+
+/* Hero Section Gradient Background */
+.gradient-bg { 
+  background: linear-gradient(135deg, #134e4a 0%, #065f46 50%, #047857 100%); 
+}
+
+/* Glassmorphism Impact Card */
+.glass-card { 
+  background: rgba(255, 255, 255, 0.95); 
+  backdrop-filter: blur(10px); 
+  -webkit-backdrop-filter: blur(10px);
+}
+
+
+/* ==========================================================================
+   3. TAILWIND COLOR PALETTE REFERENCE (Used in HTML)
+   ========================================================================== */
+
+/* Primary Emerald Palette:
+   - Base Emerald: #059669 (emerald-600)
+   - Hover / Active: #047857 (emerald-700) / #34d399 (emerald-400)
+   - Soft Accents: #ecfdf5 (emerald-50), #a7f3d0 (emerald-200)
+
+   Slate Background & Text Palette:
+   - Background Body: #f8fafc (slate-50)
+   - Primary Text: #1e293b (slate-800)
+   - Muted Text: #64748b (slate-500)
+   - Borders: #e2e8f0 (slate-200)
+*/
+/* styles.css */
+body { 
+    font-family: 'Plus Jakarta Sans', sans-serif; 
+}
+
+/* Glassmorphism Effect */
+.glass-panel { 
+    background: rgba(255, 255, 255, 0.85); 
+    backdrop-filter: blur(12px); 
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.glass-dark { 
+    background: rgba(15, 23, 42, 0.85); 
+    backdrop-filter: blur(12px); 
+    -webkit-backdrop-filter: blur(12px);
+}
+
+/* Hero Dynamic Gradient */
+.gradient-hero { 
+    background: linear-gradient(135deg, #064e3b 0%, #047857 40%, #0d9488 100%); 
+}
+
+/* Subtle Pulse Animations */
+@keyframes subtlePulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.85; transform: scale(1.02); }
+}
+
+.animate-subtle { 
+    animation: subtlePulse 3s infinite ease-in-out; 
+}
+
+/* Custom Webkit Scrollbar */
+::-webkit-scrollbar { 
+    width: 8px; 
+}
+
+::-webkit-scrollbar-track { 
+    background: #f1f5f9; 
+}
+
+::-webkit-scrollbar-thumb { 
+    background: #10b981; 
+    border-radius: 4px; 
+}
+
+::-webkit-scrollbar-thumb:hover { 
+    background: #059669; 
+}
